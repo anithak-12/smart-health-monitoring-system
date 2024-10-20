@@ -1,0 +1,48 @@
+﻿# Required Libraries
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import random
+import time
+# Simulated Health Data Generation
+def generate_health_data(num_samples):
+    """Generate simulated health data."""
+    heart_rates = [random.randint(60, 100) for _in range(num_samples)]  # Normal range for heart rate
+    temperatures = [round(random.uniform(36.1, 37.5), 1) for _ in range(num_samples)]  # Normal body temp range
+    timestamps = pd.date_range(start='2023-10-01', periods=num_samples, freq='H')
+    return pd.DataFrame({
+        'Timestamp': timestamps,
+        'Heart Rate (bpm)': heart_rates,
+        'Temperature (°C)': temperatures
+    })
+# Generate Data
+num_samples = 24  # For 24 hours
+health_data = generate_health_data(num_samples)
+# Display the generated data
+print(health_data)
+# Plotting the Health Data
+plt.figure(figsize=(14, 7))
+# Plot Heart Rate
+plt.subplot(2, 1, 1)plt.plot(health_data['Timestamp'], health_data['Heart Rate (bpm)'], marker='o', color='blue')
+plt.title('Heart Rate Monitoring')
+plt.xlabel('Time')
+plt.ylabel('Heart Rate (bpm)')
+plt.grid()
+# Plot Temperature
+plt.subplot(2, 1, 2)
+plt.plot(health_data['Timestamp'], health_data['Temperature (°C)'], marker='o', color='red')
+plt.title('Temperature Monitoring')
+plt.xlabel('Time')
+plt.ylabel('Temperature (°C)')
+plt.grid()
+plt.tight_layout()
+plt.show()
+# Analyzing Health Data
+def analyze_health_data(data):
+    """Analyze the health data."""
+    avg_heart_rate = data['Heart Rate (bpm)'].mean()
+    avg_temperature = data['Temperature (°C)'].mean()
+    print(f"Average Heart Rate: {avg_heart_rate:.2f} bpm")
+    print(f"Average Temperature: {avg_temperature:.2f} °C")
+# Analyze the generated health data
+analyze_health_data(health_data)
